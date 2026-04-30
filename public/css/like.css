@@ -1,0 +1,7 @@
+.like-btn.liked {
+    color: red;
+}
+
+.like-btn.not-liked {
+    color: gray;
+}
