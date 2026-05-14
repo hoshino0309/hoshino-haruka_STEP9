@@ -34,13 +34,13 @@
     <!-- いいねボタン -->
     <div class="product_detail__btn--like">
         <button 
-        id="like-btn"
+        id="likeBtn"
         class="like-btn {{ $product->likedBy(Auth::user()) ? 'liked' : 'not-liked' }}"
         data-product-id="{{ $product->id }}">
             <i class="fas fa-heart"></i>
         </button>
         @if ($likeCount > 0)
-        <span id="like-count">{{ $likeCount }}</span>
+        <span id="likeCount">{{ $likeCount }}</span>
         @endif
     </div><!-- /.product_detail__btn--like -->
 

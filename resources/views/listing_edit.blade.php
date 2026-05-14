@@ -17,8 +17,8 @@
     @method('PUT')
     {{-- タイトル入力フィールド --}}
     <div class="listing_edit__form-group">
-        <label for="product_name">商品名</label>
-        <input type="text" name="product_name" id="product_name" value="{{ old('product_name', $product->product_name) }}">
+        <label for="productName">商品名</label>
+        <input type="text" name="product_name" id="productName" value="{{ old('product_name', $product->product_name) }}">
     </div><!-- /.listing_edit__form-group -->
     {{-- 価格入力フィールド --}}
     <div class="listing_edit__form-group">
@@ -47,7 +47,7 @@
     {{-- 商品画像のアップロードフィールド --}}
     <div class="listing_edit__form-group">
         <label for="img_path">画像をアップロード</label>
-        <input type="file" name="img_path" id="img_path">
+        <input type="file" name="img_path" id="imgPath">
     </div><!-- /.listing_edit__form-group -->
     <div class="listing_edit__btns">
         <a href="{{ route('listing.detail', $product->id) }}" class="btn btn-back">戻る</a>

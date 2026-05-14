@@ -96,68 +96,42 @@ class ProductController extends Controller
     }
 
     // 商品の検索処理
-    public function search (ProductSearchRequest $request)
+    public function search(ProductSearchRequest $request)
     {
         $user_id = Auth::id();
-        // 自分以外の商品のみを取得
-        $query = Product::where('user_id', '!=', $user_id)
-        ->orderBy('id', 'asc');
-        // バリデーションを通過したデータを取得
+
+        // バリデーション済みデータ取得
         $validated = $request->validated();
-        // 商品名に入力された値を変数に代入
-        $productName = $request->input('product_name');
-        // 最低価格に入力された値を変数に代入
-        $priceMin = $request->input('price_min');
-        // 最高価格に入力された値を変数に代入
-        $priceMax = $request->input('price_max');
 
-        // 検索する商品名が入力された場合
-        if ($request->filled('product_name')) {
-            // 部分一致条件追加して検索
-            $query->where('product_name', 'like', '%' . $productName . '%');
+        // Modelで検索
+        $products = Product::searchProducts($user_id, $validated);
+
+        // Ajaxの場合
+        if ($request->ajax()) {
+            return view('products._list', compact('products'));
         }
 
-        // 最低価格に入力された値がある場合
-        if ($request->filled('price_min')) {
-            // 最低価格の条件を追加して検索
-            $query->where('price', '>=', $priceMin);
-        }
-        // 最高価格に入力された値がある場合
-        if ($request->filled('price_max')) {
-            // 最高価格の条件を追加して検索
-            $query->where('price', '<=', $priceMax);
-        }
-
-        $products = $query->get();
-
-        // 非同期リクエストの場合は部分HTMLだけ返す
-
-    if ($request->ajax()) {
-
-        return view('products._list', compact('products'));
-
-    }
         return view('index', compact('products'));
     }
 
     // コンストラクタ
     public function __construct(
         private Product $product = new Product,
+        private Sale $sale = new Sale,
     ) {}
 
     // マイページ画面表示
     public function mypage()
+
     {
         // ログインユーザーのIDを取得
         $user_id = Auth::id();
+
         // ログインユーザーの商品一覧を取得
         $products = $this->product->getOwnProduct($user_id);
 
-        // ログインユーザーの購入履歴を取得
-        $purchases = Sale::with('product')
-            ->where('user_id', Auth::id())
-            ->orderBy('created_at', 'asc')
-            ->get();
+        // 購入履歴を取得
+        $purchases = $this->sale->getPurchaseHistory($user_id);
 
         // マイページにデータを渡す
         return view('mypage', compact('products', 'purchases'));
@@ -190,38 +164,19 @@ class ProductController extends Controller
     // 商品購入画面の処理
     public function purchase(PurchaseRequest $request)
     {
-        $product_id = $request->input('id');
-        $quantity = $request->input('quantity');
-
-        $product = Product::find($product_id);
-        
-        // 在庫が不足している場合はエラーをビューに返す
-        if (!$product || !$product->hasSufficientStock($quantity)) {
+        $result = $this->sale->purchaseProduct(
+            $request->input('id'),
+            $request->input('quantity'),
+            Auth::id()
+        );
+        // 失敗
+        if (!$result) {
             return redirect()->back()
-                ->withErrors(['quantity' => '在庫が不足しています。'])
+                ->withErrors(['quantity' => '在庫が不足しているか、購入に失敗しました。'])
                 ->withInput();
         }
-
-        DB::beginTransaction();
-        try {
-            Sale::create([
-                'user_id' => Auth::id(),
-                'product_id' => $product_id,
-                'quantity' => $quantity
-            ]);
-
-            $product->reduceStock($quantity);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()
-                ->withErrors(['error' => '購入に失敗しました。'])
-                ->withInput();
-        }
-
+        // 成功
         return redirect()->route('index')
             ->with('success', '購入が完了しました。');
     }
-
 }

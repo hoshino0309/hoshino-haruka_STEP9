@@ -22,10 +22,10 @@
                     <li>ログインユーザー: {{ auth()->user()->user_name }}</li>
                 </ul><!-- /.header__list -->
                 <div class="header__btn">
-                    <form id="logout-form" action="{{route('logout') }}" method="POST">
+                    <form id="logoutForm" action="{{route('logout') }}" method="POST">
                         @csrf
                     </form>
-                    <a href="{{ route('logout') }}" class="btn header__btn--logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a href="{{ route('logout') }}" class="btn header__btn--logout" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                         ログアウト
                     </a><!-- /.btn header__btn--logout -->
                 </div><!-- /.header__btn -->

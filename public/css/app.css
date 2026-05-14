@@ -93,7 +93,7 @@ header {
 }
 
 /* ログアウトボタン */
-#logout-form {
+#logoutForm {
   display: none;
 }
 

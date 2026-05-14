@@ -13,8 +13,8 @@
 <form action="{{ route('store') }}" method="post" class="create__form" enctype="multipart/form-data">
     @csrf
     <div class="create__form--group">
-        <label for="product_name">商品名</label>
-        <input type="text" name="product_name" id="product_name" value="{{ old('product_name') }}" placeholder="商品名を入力してください">
+        <label for="productName">商品名</label>
+        <input type="text" name="product_name" id="productName" value="{{ old('product_name') }}" placeholder="商品名を入力してください">
     </div><!-- /.create__form-group -->
     <div class="create__form--group">
         <label for="price">価格</label>
@@ -29,8 +29,8 @@
         <input type="number" name="stock" id="stock" value="{{ old('stock') }}" placeholder="在庫数を入力してください">
     </div><!-- /.create__form--group -->
     <div class="create__form--group">
-        <label for="img_path">商品画像</label>
-        <input type="file" name="img_path" id="img_path">
+        <label for="imgPath">商品画像</label>
+        <input type="file" name="img_path" id="imgPath">
     </div><!-- /.create__form-group -->
     <div class="create__btns">
         <a href="{{ route('mypage') }}" class="btn btn-back">戻る</a>

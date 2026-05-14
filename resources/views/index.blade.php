@@ -6,6 +6,10 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
+@section('js')
+<script src="{{ asset('js/search.js') }}"></script>
+@endsection
+
 @section('content')
 
 <div class="product__title">
@@ -17,11 +21,11 @@
         <input type="text" name="product_name" placeholder="商品名を入力" value="{{ request('product_name') }}">
     </div><!-- /.product__search--name -->
     <div class="product__search--minPrice">
-        <input type="number" name="price_min" id="price_min" placeholder="最低価格" value="{{ request('price_min') }}">
+        <input type="number" name="price_min" id="priceMin" placeholder="最低価格" value="{{ request('price_min') }}">
     </div><!-- /.product__search--minPrice -->
     <span>〜</span>
     <div class="product__search--maxPrice">
-        <input type="number" name="price_max" id="price_max" placeholder="最高価格" value="{{ request('price_max') }}">
+        <input type="number" name="price_max" id="priceMax" placeholder="最高価格" value="{{ request('price_max') }}">
     </div><!-- /.product__search--maxPrice -->
     <div class="product__btn--group">
         <button type="submit" class="btn product__btn--search">検索</button>
@@ -29,9 +33,7 @@
 </form>
 
 <!-- 商品の一覧表示 -->
-<div id="product-list">
+<div id="productList">
     @include('products._list')
 </div>
 @endsection
-
-@vite('public/js/search.js')

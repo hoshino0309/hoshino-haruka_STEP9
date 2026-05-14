@@ -74,4 +74,33 @@ class Product extends Model
     {
         $this->decrement('stock', $quantity);
     }
+
+    // 検索処理
+
+    public static function searchProducts($user_id, $filters)
+    {
+        $query = self::where('user_id', '!=', $user_id)
+            ->orderBy('id', 'asc');
+
+        // 商品名検索
+        if (!empty($filters['product_name'])) {
+            $query->where(
+                'product_name',
+                'like',
+                '%' . $filters['product_name'] . '%'
+            );
+        }
+
+        // 最低価格
+        if (!empty($filters['price_min'])) {
+            $query->where('price', '>=', $filters['price_min']);
+        }
+
+        // 最高価格
+        if (!empty($filters['price_max'])) {
+            $query->where('price', '<=', $filters['price_max']);
+        }
+
+        return $query->get();
+    }
 }

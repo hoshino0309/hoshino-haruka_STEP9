@@ -14,8 +14,8 @@
 <form action="{{ route('account.update') }}" method="POST" class="account_edit__form">
     @csrf
     <div class="form-group">
-        <label for="user_name">ユーザー名</label>
-        <input type="text" name="user_name" id="user_name" value="{{ auth()->user()->user_name }}" class="form-control">
+        <label for="userName">ユーザー名</label>
+        <input type="text" name="user_name" id="userName" value="{{ auth()->user()->user_name }}" class="form-control">
     </div><!-- /.form-group -->
 
     <div class="form-group">
@@ -24,13 +24,13 @@
     </div><!-- /.form-group -->
 
     <div class="form-group">
-        <label for="name_kanji">名前</label>
-        <input type="text" name="name_kanji" id="name_kanji" value="{{ auth()->user()->name_kanji }}" class="form-control">
+        <label for="nameKanji">名前</label>
+        <input type="text" name="name_kanji" id="nameKanji" value="{{ auth()->user()->name_kanji }}" class="form-control">
     </div><!-- /.form-group -->
 
     <div class="form-group">
-        <label for="name_kana">カナ</label>
-        <input type="text" name="name_kana" id="name_kana" value="{{ auth()->user()->name_kana }}" class="form-control">
+        <label for="nameKana">カナ</label>
+        <input type="text" name="name_kana" id="nameKana" value="{{ auth()->user()->name_kana }}" class="form-control">
     </div><!-- /.form-group -->
 
     <div class="account_edit__btns">

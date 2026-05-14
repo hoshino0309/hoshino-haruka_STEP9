@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.product__search');
 
-    if (!form) return; // 念のため
+    if (!form) return;
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(res => res.text())
         .then(html => {
-            document.getElementById('product-list').innerHTML = html;
+            document.getElementById('productList').innerHTML = html;
         })
         .catch(err => console.error(err));
     });
