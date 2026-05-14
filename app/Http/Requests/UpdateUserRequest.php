@@ -26,19 +26,23 @@ class UpdateUserRequest extends FormRequest
             'user_name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'name_kanji' => 'required|max:255',
+            'name_kana' => 'required|max:255',
         ];
     }
 
-        public function messages () :array
-        {
-            return[
-                'user_name.required' => 'ユーザー名を入力してください',
-                'user_name.max' => 'ユーザー名は255文字以内で入力してください',
-                'email.required' => 'メールアドレスを入力してください',
-                'email.email' => 'メールアドレスの形式が正しくありません',
-                'email.max' => 'メールアドレスは255文字以内で入力してください',
-                'name_kanji.required' => '名前を入力してください',
-                'name_kanji.max' => '名前は255文字以内で入力してください',
-            ];
-        }
+    public function messages(): array
+    {
+        return [    
+            'user_name.required' => 'ユーザー名を入力してください',
+            'user_name.max' => 'ユーザー名は255文字以内で入力してください',    
+            'email.required' => 'メールアドレスを入力してください',    
+            'email.email' => 'メールアドレスの形式が正しくありません',   
+            'email.max' => 'メールアドレスは255文字以内で入力してください',   
+            'name_kanji.required' => '名前を入力してください',   
+            'name_kanji.max' => '名前は255文字以内で入力してください',    
+            'name_kana.required' => 'カナを入力してください',    
+            'name_kana.max' => 'カナは255文字以内で入力してください',
+        ];
+    
+    }
 }
